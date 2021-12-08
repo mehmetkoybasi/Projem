@@ -1,4 +1,6 @@
 ﻿
+@using Punch.Models
+@model IEnumerable<KullaniciModel> 
 @{
     Layout = null;
 }
@@ -81,6 +83,21 @@
                 </div>
             </form>
 
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>Şirket Kodu</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>Kullanıcı E-Mail</th>
+                </tr>
+                @foreach (KullaniciModel kullanicilar in Model)
+                {
+                    <tr>
+                        <td>@kullanicilar.sirket_kodu</td>
+                        <td>@kullanicilar.kullanici_adi</td>
+                        <td>@kullanicilar.kullanici_email</td>
+                    </tr>
+                }
+            </table>
 
         </div>
     </div>
