@@ -12,36 +12,55 @@ namespace Punch.Controllers
     public class HomeController : Controller
     {
         // GET: Home
+        [HttpGet]
         public ActionResult Index()
         {
-            List<KullaniciModel> customers = new List<KullaniciModel>();
-            string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-
-            using (MySqlConnection con = new MySqlConnection(constr))
+            KullaniciModel kg = new KullaniciModel();
+            return View(kg);
+        }
+        [HttpPost]
+        public ActionResult Index(KullaniciModel kg)
+        {
+            try
             {
-                string query = "SELECT * FROM tbl_user";
-                using (MySqlCommand cmd = new MySqlCommand(query))
+                
+                string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+                using (MySqlConnection con = new MySqlConnection(constr))
                 {
-                    cmd.Connection = con;
-                    con.Open();
-                    using (MySqlDataReader sdr = cmd.ExecuteReader())
+                    string query = "SELECT * FROM tbl_user t where t.kullanici_adi = '"+kg.kullanici_adi+ "' and t.kullanici_sifre = '" + kg.kullanici_sifre+"' ";
+                    using (MySqlCommand cmd = new MySqlCommand(query))
                     {
-                        while (sdr.Read())
+                        cmd.Connection = con;
+                        con.Open();
+                        using (MySqlDataReader sdr = cmd.ExecuteReader())
                         {
-                            customers.Add(new KullaniciModel
+                            if (sdr.Read())
                             {
-                                sirket_kodu = Convert.ToInt32(sdr["sirket_kodu"]),
-                                kullanici_adi = sdr["kullanici_adi"].ToString(),
-                                kullanici_email = sdr["kullanici_email"].ToString()
-                            });
+                                con.Close();
+                                Session["KullaniciAdi"] = kg.kullanici_adi;
+                                Session["KullaniciSifre"] = kg.kullanici_sifre;
+                                return RedirectToAction("Index","AnaSayfa");
+                            }
+                            else
+                            {
+                                ModelState.AddModelError("Hata","Login Hata... Kullanıcı Bilgileri Doğru");
+                                con.Close();
+                                return View(kg);
+                                Session.Clear();
+
+                            }
+
                         }
                     }
-                    con.Close();
                 }
+
             }
-
-
-            return View(customers);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Hata", "Login Hata... Kullanıcı Bilgileri Doğru");
+                return View(kg);
+            }
         }
+
     }
 }
