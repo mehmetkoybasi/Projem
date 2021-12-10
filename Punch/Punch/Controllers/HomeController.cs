@@ -43,7 +43,7 @@ namespace Punch.Controllers
                             }
                             else
                             {
-                                ModelState.AddModelError("Hata","Login Hata... Kullanıcı Bilgileri Doğru");
+                                ModelState.AddModelError("Hata","Login Hata... Kullanıcı Bilgileri Hatalı");
                                 con.Close();
                                 return View(kg);
                                 Session.Clear();
