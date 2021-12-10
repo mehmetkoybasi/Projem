@@ -36,9 +36,11 @@ namespace Punch.Controllers
                         {
                             if (sdr.Read())
                             {
+                               // Kullanici_Login_Kontrol kadi = kg.kullanici_adi;
                                 con.Close();
                                 Session["KullaniciAdi"] = kg.kullanici_adi;
                                 Session["KullaniciSifre"] = kg.kullanici_sifre;
+
                                 return RedirectToAction("Index","AnaSayfa");
                             }
                             else

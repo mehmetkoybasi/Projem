@@ -15,6 +15,6 @@ namespace Punch.Models
     }
     public class Kullanici_Login_Kontrol
     {
-        public string sesion { get; set; }
+        public string kadi { get; set; }
     }
 }
