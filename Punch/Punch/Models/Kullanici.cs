@@ -12,6 +12,7 @@ namespace Punch.Models
         public string kullanici_adi { get; set; }
         public string kullanici_sifre { get; set; }
         public string kullanici_email { get; set; }
+        public string kullanici_adsoyad { get; set; }  
     }
     public class Kullanici_Login_Kontrol
     {

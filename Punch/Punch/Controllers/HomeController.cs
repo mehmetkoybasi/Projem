@@ -19,7 +19,7 @@ namespace Punch.Controllers
             return View(kg);
         }
         [HttpPost]
-        public ActionResult Index(KullaniciModel kg)
+        public ActionResult Index(KullaniciModel kg, string kadi)
         {
             try
             {
@@ -36,10 +36,11 @@ namespace Punch.Controllers
                         {
                             if (sdr.Read())
                             {
-                               // Kullanici_Login_Kontrol kadi = kg.kullanici_adi;
+                                kadi = kg.kullanici_adi.ToString();
                                 con.Close();
                                 Session["KullaniciAdi"] = kg.kullanici_adi;
                                 Session["KullaniciSifre"] = kg.kullanici_sifre;
+                                //Session["KullaniciAdSoyad"] = kg.kullanici_adsoyad;
 
                                 return RedirectToAction("Index","AnaSayfa");
                             }

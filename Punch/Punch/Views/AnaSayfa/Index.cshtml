@@ -1,4 +1,6 @@
 ﻿
+@using Punch.Models;
+@model IEnumerable<Kullanici_Login_Kontrol>
 @{
     Layout = null;
 }
@@ -194,7 +196,8 @@
                         <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">@Session["KullaniciAdi"].ToString()</a>
+                        <!--<a href="#" class="d-block">@Session["KullaniciAdSoyad"].ToString()</a>-->
+                        <a href="#" class="d-block">@Kullanici_Login_Kontrol.kadi</a>
                     </div>
                 </div>
 
@@ -214,7 +217,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-    with font-awesome or any other icon font library -->
+                        with font-awesome or any other icon font library -->
                         <!--Yeni Menü Başlangıç-->
                         <li class="nav-item menu-open">
                             <a href="#" class="nav-link active">
