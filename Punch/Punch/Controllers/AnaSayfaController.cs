@@ -22,10 +22,6 @@ namespace Punch.Controllers
                 
                 return RedirectToAction("Index", "Home");
             }
-            
-            
-
-
         }
     }
 }
