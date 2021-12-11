@@ -5,72 +5,71 @@
     Layout = "~/Views/_Layout.cshtml";
 }
 <!-- Content Wrapper. Contains page content -->
-
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Projects</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Finans Yönetim</a></li>
-                        <li class="breadcrumb-item active">Müşteri</li>
-                    </ol>
-                </div>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Projects</h1>
             </div>
-        </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-
-        <!-- Default box -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Projects</h3>
-
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="Ekle" title="Ekle">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Finans Yönetim</a></li>
+                    <li class="breadcrumb-item active">Müşteri</li>
+                </ol>
             </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
 
-            <div class="card-body p-0">
-                <table class="table table-striped projects">
-                    <thead>
-                        <tr>
-                            <th style="width: 1%">
-                                ID
-                            </th>
-                            <th style="width: 20%">
-                                CurrAccCode
-                            </th>
-                            <th style="width: 30%">
-                                CurrAccDesc
-                            </th>
-                            <th>
-                                Status
-                            </th>
-                            <th style="width: 8%" class="text-center">
-                                Description
-                            </th>
-                            <th style="width: 20%">
-                            </th>
-                        </tr>
-                    </thead>
+<!-- Main content -->
+<section class="content">
 
-                    <tbody>
-                        @foreach (var rec_ in (IEnumerable<Punch.Models.Musteri>)ViewData["MusteriListesi"])
-                        {
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Projects</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="Ekle" title="Ekle">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            <table class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th style="width: 1%">
+                            ID
+                        </th>
+                        <th style="width: 20%">
+                            CurrAccCode
+                        </th>
+                        <th style="width: 30%">
+                            CurrAccDesc
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th style="width: 8%" class="text-center">
+                            Description
+                        </th>
+                        <th style="width: 20%">
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var rec_ in (IEnumerable<Punch.Models.Musteri>)ViewData["MusteriListesi"])
+                    {
                         <tr>
                             <td>@rec_.Id</td>
                             <td>@rec_.CurrAccType - @rec_.CurrAccCode  </td>
@@ -81,10 +80,10 @@
                                 <span class="badge badge-success">Success</span>
                             </td>
                             <td class="project-actions text-right">
-                                <a class="btn btn-primary btn-sm" href="#">
+                                <a class="btn btn-primary btn-sm" title="Göster" href="javascript:Guncelle('@rec_.Id','@rec_.CurrAccCode','@rec_.CurrAccDesc','@rec_.CurrAccType','@rec_.Status');">
                                     <i class="fas fa-folder">
                                     </i>
-                                    View
+                                    Göster
                                 </a>
                                 <a class="btn btn-info btn-sm" href="#">
                                     <i class="fas fa-pencil-alt">
@@ -99,16 +98,72 @@
                             </td>
                         </tr>
 
-                        }
+                    }
 
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.card-body -->
+                </tbody>
+            </table>
         </div>
-        <!-- /.card -->
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
 
-    </section>
-    <!-- /.content -->
-
+</section>
+<!-- /.content -->
 <!-- /.content-wrapper -->
+<!-- /.modal_goster -->
+<div class="modal fade" id="modal-default_goster">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Default Modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Müşteri ID</label>
+                        <input type="email" id="id" class="form-control" placeholder="ID Adresi Yazmayın">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Müşteri Kodu</label>
+                        <input type="email" id="CurrAccCode" class="form-control" placeholder="Müşteri Kodu">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Müşteri Tanımı</label>
+                        <input type="email" id="CurrAccDesc" class="form-control" placeholder="Müşteri Tanımı">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Müşteri Tipi</label>
+                        <input type="email" id="CurrAccType" class="form-control" placeholder="Müşteri Tipi">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Müşteri Statü</label>
+                        <input type="email" id="IsActive" class="form-control" placeholder="Müşteri Statü">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Form Kapat</button>
+                <button type="button" class="btn btn-primary">Kaydet</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal_goster -->
+
+<script>
+    function Guncelle(Id, CurrAccCode, CurrAccDesc, CurrAccType, IsActive) {
+        $('#id').val(Id);
+        $('#CurrAccCode').val(CurrAccCode);
+        $('#CurrAccDesc').val(CurrAccDesc);
+        $('#CurrAccType').val(CurrAccType);
+        $('#IsActive').val(IsActive);
+        $('#modal-default_goster').modal('show');
+    }
+</script>
