@@ -31,9 +31,11 @@ namespace Punch.Controllers
                             {
                                 MusteriListesi.Add(new Musteri
                                 {
+                                    Id=Convert.ToInt32(sdr["ID"]),
                                     CurrAccCode = Convert.ToInt32(sdr["CurrAccCode"]),
                                     CurrAccDesc = sdr["CurrAccDesc"].ToString(),
                                     CurrAccType = sdr["CurrAccType"].ToString(),
+                                    Status=Convert.ToInt32(sdr["IsActive"]),
 
                                 });
                             }

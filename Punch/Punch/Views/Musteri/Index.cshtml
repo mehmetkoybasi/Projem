@@ -15,8 +15,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Projects</li>
+                        <li class="breadcrumb-item"><a href="#">Finans Yönetim</a></li>
+                        <li class="breadcrumb-item active">Müşteri</li>
                     </ol>
                 </div>
             </div>
@@ -58,10 +58,10 @@
                                 CurrAccDesc
                             </th>
                             <th>
-                                CurrAccType
+                                Status
                             </th>
                             <th style="width: 8%" class="text-center">
-                                Status
+                                Description
                             </th>
                             <th style="width: 20%">
                             </th>
@@ -72,10 +72,11 @@
                         @foreach (var rec_ in (IEnumerable<Punch.Models.Musteri>)ViewData["MusteriListesi"])
                         {
                         <tr>
-                            <td>@rec_.CurrAccCode</td>
-                            <td>@rec_.CurrAccCode</td>
-                            <td>@rec_.CurrAccDesc</td>
+                            <td>@rec_.Id</td>
                             <td>@rec_.CurrAccType - @rec_.CurrAccCode  </td>
+                            <td>@rec_.CurrAccDesc</td>
+                            <td>@rec_.Status</td>
+
                             <td class="project-state">
                                 <span class="badge badge-success">Success</span>
                             </td>
