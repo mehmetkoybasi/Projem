@@ -12,6 +12,7 @@ namespace Punch.Controllers
     public class MusteriController : Controller
     {
         // GET: Musteri
+        [HttpGet]
         public ActionResult Index()
         {
             List<Musteri> MusteriListesi = new List<Musteri>();
@@ -50,11 +51,29 @@ namespace Punch.Controllers
                 }
             }
             ViewData["MusteriListesi"] = MusteriListesi;
+            TempData["KayitMesaj"] = TempData["message"];
             return View();
         }
-        public ActionResult Musteri_Kaydet()
+
+        [HttpPost]
+        public ActionResult Musteri_Kaydet(Musteri m)
         {
-            return View();
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                string query = "INSERT INTO cd_curracc (CurrAccCode,CurrAccDesc,CurrAccType,IsActive) " +
+                                              " VALUES ('"+m.CurrAccCode+"','"+m.CurrAccDesc+"','"+m.CurrAccType+"','"+m.Status+"') ";
+                using (MySqlCommand cmd = new MySqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    TempData["message"] = "Added";
+                    return RedirectToAction("Index");
+                }
+            }
+            
         }
         public ActionResult Musteri_Guncelle()
         {

@@ -24,17 +24,16 @@
 
 <!-- Main content -->
 <section class="content">
-
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Projects</h3>
+            <h3 class="card-title">Müşteri Listesi</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-tool" data-card-widget="Ekle" title="Ekle">
+                <button type="button" class="btn btn-tool" data-card-widget="Ekle" title="Yeni Müşteri Ekle" data-toggle="modal" data-target="#modal-default_kaydet">
                     <i class="fas fa-plus"></i>
                 </button>
                 <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
@@ -74,7 +73,16 @@
                             <td>@rec_.Id</td>
                             <td>@rec_.CurrAccType - @rec_.CurrAccCode  </td>
                             <td>@rec_.CurrAccDesc</td>
-                            <td>@rec_.Status</td>
+                            <td>
+                                @if (@rec_.Status == 1)
+                                {
+                                    <span class="badge badge-success">Aktif</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">Pasif</span>
+                                }
+                            </td>
 
                             <td class="project-state">
                                 <span class="badge badge-success">Success</span>
@@ -115,14 +123,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Default Modal</h4>
+                <h4 class="modal-title">Müşteri Detay</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>One fine body&hellip;</p>
-
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Müşteri ID</label>
@@ -148,7 +154,6 @@
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Form Kapat</button>
-                <button type="button" class="btn btn-primary">Kaydet</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -157,7 +162,68 @@
 </div>
 <!-- /.modal_goster -->
 
-<script>
+<!-- /.modal_Kaydet -->
+<div class="modal fade bd-example-modal-lg" id="modal-default_kaydet" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Yeni Müşteri Rut Kayıt</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
+            </div>
+            <form method="post" action="~/Musteri/Musteri_Kaydet">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <label for="inputAddress">Müşteri Kodu</label><br />
+                            <input type="text" class="form-control" name="CurrAccCode" placeholder="Müşteri Kodu....">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputAddress">Müşteri Tanımı</label><br />
+                            <input type="text" class="form-control" name="CurrAccDesc" placeholder="Müşteri Tanımı....">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputAddress">Müşteri Tipi</label><br />
+                            <input type="text" class="form-control" name="CurrAccType" placeholder="Müşteri Tipi....">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputAddress">Statü</label><br />
+                            <input type="text" class="form-control" name="Status" placeholder="Statu....">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /.modal_Kaydet -->
+
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="../../plugins/toastr/toastr.min.js"></script>
+<script src="../../dist/js/adminlte.min.js"></script>
+
+@if (!string.IsNullOrEmpty(TempData["KayitMesaj"] as string))
+{
+
+    <script type="text/javascript">
+        $(function () {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            Toast.fire({
+                icon: 'success',
+                title: 'Müşteri Kaydınız Başarıyla Yapılmıştır'
+            })
+        });
+    </script>
+
+}
+<script type="text/javascript">
     function Guncelle(Id, CurrAccCode, CurrAccDesc, CurrAccType, IsActive) {
         $('#id').val(Id);
         $('#CurrAccCode').val(CurrAccCode);
