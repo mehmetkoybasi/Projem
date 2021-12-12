@@ -75,9 +75,22 @@ namespace Punch.Controllers
             }
             
         }
-        public ActionResult Musteri_Guncelle()
+        public ActionResult Musteri_Guncelle(Musteri mg)
         {
-            return View();
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                string query = "UPDATE cd_curracc set CurrAccCode='" + mg.CurrAccCode + "',CurrAccDesc='" + mg.CurrAccDesc + "', CurrAccType='" + mg.CurrAccType + "',IsActive='" + mg.Status + "' where id='"+mg.Id+"'";
+                using (MySqlCommand cmd = new MySqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    TempData["message"] = "Updated";
+                    return RedirectToAction("Index");
+                }
+            }
         }
         public ActionResult Musteri_Sil()
         {

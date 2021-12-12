@@ -88,12 +88,12 @@
                                 <span class="badge badge-success">Success</span>
                             </td>
                             <td class="project-actions text-right">
-                                <a class="btn btn-primary btn-sm" title="Göster" href="javascript:Guncelle('@rec_.Id','@rec_.CurrAccCode','@rec_.CurrAccDesc','@rec_.CurrAccType','@rec_.Status');">
+                                <a class="btn btn-primary btn-sm" title="Göster" href="javascript:Goster('@rec_.Id','@rec_.CurrAccCode','@rec_.CurrAccDesc','@rec_.CurrAccType','@rec_.Status');">
                                     <i class="fas fa-folder">
                                     </i>
                                     Göster
                                 </a>
-                                <a class="btn btn-info btn-sm" href="#">
+                                <a class="btn btn-info btn-sm" title="Güncelle" href="javascript:Guncelle('@rec_.Id','@rec_.CurrAccCode','@rec_.CurrAccDesc','@rec_.CurrAccType','@rec_.Status');">
                                     <i class="fas fa-pencil-alt">
                                     </i>
                                     Edit
@@ -132,28 +132,28 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Müşteri ID</label>
-                        <input type="email" id="id" class="form-control" placeholder="ID Adresi Yazmayın">
+                        <input type="text" id="id" class="form-control" placeholder="ID Adresi Yazmayın" title="Bu Alan Sabittir Değiştirilemez" readonly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Müşteri Kodu</label>
-                        <input type="email" id="CurrAccCode" class="form-control" placeholder="Müşteri Kodu">
+                        <input type="text" id="CurrAccCode" class="form-control" placeholder="Müşteri Kodu">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Müşteri Tanımı</label>
-                        <input type="email" id="CurrAccDesc" class="form-control" placeholder="Müşteri Tanımı">
+                        <input type="text" id="CurrAccDesc" class="form-control" placeholder="Müşteri Tanımı">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Müşteri Tipi</label>
-                        <input type="email" id="CurrAccType" class="form-control" placeholder="Müşteri Tipi">
+                        <input type="text" id="CurrAccType" class="form-control" placeholder="Müşteri Tipi">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Müşteri Statü</label>
-                        <input type="email" id="IsActive" class="form-control" placeholder="Müşteri Statü">
+                        <input type="text" id="IsActive" class="form-control" placeholder="Müşteri Statü">
                     </div>
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Form Kapat</button>
+                <button type="button" class="btn btn-default bg-blue" data-dismiss="modal">Form Kapat</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -161,7 +161,6 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal_goster -->
-
 <!-- /.modal_Kaydet -->
 <div class="modal fade bd-example-modal-lg" id="modal-default_kaydet" tabindex="-1" role="dialog" aria-labelledby="">
     <div class="modal-dialog modal-lg" role="document">
@@ -197,6 +196,43 @@
     </div>
 </div>
 <!-- /.modal_Kaydet -->
+<!-- /.modal_guncelle -->
+<div class="modal fade bd-example-modal-lg" id="modal-default_guncelle" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Yeni Müşteri Rut Kayıt</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
+            </div>
+            <form method="post" action="~/Musteri/Musteri_Guncelle">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputAddress">Müşteri Kodu</label><br />
+                        <input type="text" id="G_id" class="form-control" name="ID" placeholder="Müşteri Kodu....">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">Müşteri Kodu</label><br />
+                        <input type="text" id="G_CurrAccCode" class="form-control" name="CurrAccCode" placeholder="Müşteri Kodu....">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">Müşteri Tanımı</label><br />
+                        <input type="text" id="G_CurrAccDesc" class="form-control" name="CurrAccDesc" placeholder="Müşteri Tanımı....">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">Müşteri Tipi</label><br />
+                        <input type="text" id="G_CurrAccType" class="form-control" name="CurrAccType" placeholder="Müşteri Tipi....">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">Statü</label><br />
+                        <input type="text" id="G_IsActive" class="form-control" name="Status" placeholder="Statu....">
+                    </div>
+                    <button type="submit" class="btn btn-default bg-blue disabled" id="guncelle">Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /.modal_guncelle -->
 
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -215,16 +251,46 @@
                 showConfirmButton: false,
                 timer: 3000
             });
-            Toast.fire({
-                icon: 'success',
-                title: 'Müşteri Kaydınız Başarıyla Yapılmıştır'
-            })
+
+            if (TempData["KayitMesaj"] == 'Updated') {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Müşteri Güncellemeniz Başarıyla Yapılmıştır'
+                })
+            }
+            else if (TempData["KayitMesaj"] == 'Added') {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Müşteri Kaydınız Başarıyla Yapılmıştır'
+                })
+            }
         });
     </script>
 
 }
 <script type="text/javascript">
+
+    //$('#G_CurrAccDesc').change(function () {
+    //    $('#guncelle').removeClass('btn btn -default bg - blue disabled').addClass('btn btn-default bg-blue');
+    //});
+
+    $('#G_CurrAccDesc').on('input', function (e) {
+        $('#guncelle').removeClass('btn btn-default bg-blue disabled').addClass('btn btn-default bg-blue');
+    });
+
+
     function Guncelle(Id, CurrAccCode, CurrAccDesc, CurrAccType, IsActive) {
+        $('#G_id').val(Id);
+        $('#G_CurrAccCode').val(CurrAccCode);
+        $('#G_CurrAccDesc').val(CurrAccDesc);
+        $('#G_CurrAccType').val(CurrAccType);
+        $('#G_IsActive').val(IsActive);
+        $('#modal-default_guncelle').modal('show');
+    }
+</script>
+
+<script type="text/javascript">
+    function Goster(Id, CurrAccCode, CurrAccDesc, CurrAccType, IsActive) {
         $('#id').val(Id);
         $('#CurrAccCode').val(CurrAccCode);
         $('#CurrAccDesc').val(CurrAccDesc);
