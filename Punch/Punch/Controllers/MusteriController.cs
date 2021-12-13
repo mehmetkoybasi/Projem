@@ -19,7 +19,9 @@ namespace Punch.Controllers
             string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
             using (MySqlConnection con = new MySqlConnection(constr))
             {
-                string query = "SELECT * FROM cd_curracc";
+                //string query = "SELECT * FROM cd_curracc";
+                //string query = "call sp_customer";
+                string query = "SET @AccID = '2'; CALL `sp_customer`(@AccID); SELECT @AccID AS `AccID`;"; 
                 using (MySqlCommand cmd = new MySqlCommand(query))
                 {
                     cmd.Connection = con;
@@ -80,7 +82,8 @@ namespace Punch.Controllers
             string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
             using (MySqlConnection con = new MySqlConnection(constr))
             {
-                string query = "UPDATE cd_curracc set CurrAccCode='" + mg.CurrAccCode + "',CurrAccDesc='" + mg.CurrAccDesc + "', CurrAccType='" + mg.CurrAccType + "',IsActive='" + mg.Status + "' where id='"+mg.Id+"'";
+                //string query = "UPDATE cd_curracc set CurrAccCode='" + mg.CurrAccCode + "',CurrAccDesc='" + mg.CurrAccDesc + "', CurrAccType='" + mg.CurrAccType + "',IsActive='" + mg.Status + "' where id='"+mg.Id+"'";
+                string query = "SET @p0='" + mg.Id + "'; SET @p1='" + mg.CurrAccCode + "'; SET @p2='" + mg.CurrAccDesc + "'; SET @p3='" + mg.CurrAccType + "'; SET @p4='" + mg.Status + "'; CALL sp_upcustomer (@p0, @p1, @p2, @p3, @p4); SELECT @p0 AS `AccID`, @p1 AS `AccCode`, @p2 AS `AccDesc`, @p3 AS `AccType`, @p4 AS `Active`;";
                 using (MySqlCommand cmd = new MySqlCommand(query))
                 {
                     cmd.Connection = con;
