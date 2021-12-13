@@ -100,13 +100,13 @@ namespace Punch.Controllers
 
         [HttpPost]
         [ActionName("Musteri_Sil")]
-        public ActionResult Musteri_Sil(int ms)
+        public ActionResult Musteri_Sil(Musteri ms)
         {
             string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
             using (MySqlConnection con = new MySqlConnection(constr))
             {
                 
-                string query = "DELETE FROM cd_curracc where id='" + ms + "'";
+                string query = "DELETE FROM cd_curracc where id='" + ms.Id + "'";
                 using (MySqlCommand cmd = new MySqlCommand(query))
                 {
                     cmd.Connection = con;
@@ -114,6 +114,7 @@ namespace Punch.Controllers
                     cmd.ExecuteNonQuery();
                     con.Close();
                     TempData["message"] = "Deleted";
+                   
                     return RedirectToAction("Index");
                 }
             }
