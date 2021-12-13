@@ -19,9 +19,9 @@ namespace Punch.Controllers
             string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
             using (MySqlConnection con = new MySqlConnection(constr))
             {
-                //string query = "SELECT * FROM cd_curracc";
+                string query = "SELECT * FROM cd_curracc";
                 //string query = "call sp_customer";
-                string query = "SET @AccID = '2'; CALL `sp_customer`(@AccID); SELECT @AccID AS `AccID`;"; 
+                //string query = "SET @p0='2'; CALL sp_customer (@p0); SELECT @p0 AS `AccID`;"; 
                 using (MySqlCommand cmd = new MySqlCommand(query))
                 {
                     cmd.Connection = con;
@@ -77,6 +77,8 @@ namespace Punch.Controllers
             }
             
         }
+
+        [HttpPost]
         public ActionResult Musteri_Guncelle(Musteri mg)
         {
             string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
@@ -95,9 +97,26 @@ namespace Punch.Controllers
                 }
             }
         }
-        public ActionResult Musteri_Sil()
+
+        [HttpPost]
+        [ActionName("Musteri_Sil")]
+        public ActionResult Musteri_Sil(int ms)
         {
-            return View();
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                
+                string query = "DELETE FROM cd_curracc where id='" + ms + "'";
+                using (MySqlCommand cmd = new MySqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    TempData["message"] = "Deleted";
+                    return RedirectToAction("Index");
+                }
+            }
         }
     }
 }

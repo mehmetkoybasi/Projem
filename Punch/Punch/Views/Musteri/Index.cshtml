@@ -96,12 +96,30 @@
                                 <a class="btn btn-info btn-sm" title="Güncelle" href="javascript:Guncelle('@rec_.Id','@rec_.CurrAccCode','@rec_.CurrAccDesc','@rec_.CurrAccType','@rec_.Status');">
                                     <i class="fas fa-pencil-alt">
                                     </i>
-                                    Edit
+                                    Güncelle
                                 </a>
-                                <a class="btn btn-danger btn-sm" href="#">
+
+                                @*@using (Html.BeginForm("Delete", "Empresa", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.EmpresaID)
+                        @Html.ActionLink("Delete", "Delete", new { id = Model.EmpresaID })
+                        <button type="submit" class="btn btn-danger" value="Delete">Delete</button>
+                    }*@
+                                @*<form action="~/Musteri/Musteri_Sil" method="post" id="musteri_sil">
+                        <button type="submit" class="btn btn-danger btn-sm" id="S_id" value="javascript:Sil('@rec_.Id')" href="javascript:Sil('@rec_.Id')">
+                            Sil
+                            <i class="fas fa-trash">
+                            </i>
+                        </button>
+                    </form>*@
+
+
+
+                                <a class="btn btn-danger btn-sm" title="Sil" href="#">
                                     <i class="fas fa-trash">
                                     </i>
-                                    Delete
+                                    Sil
                                 </a>
                             </td>
                         </tr>
@@ -182,11 +200,19 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label for="inputAddress">Müşteri Tipi</label><br />
-                            <input type="text" class="form-control" name="CurrAccType" placeholder="Müşteri Tipi....">
+                            <select class="custom-select" name="CurrAccType">
+                                <option value="TP">Toptan</option>
+                                <option value="PR">Perakende</option>
+                            </select>
+                            @*<input type="text" class="form-control" name="CurrAccType" placeholder="Müşteri Tipi....">*@
                         </div>
                         <div class="form-group col-md-2">
                             <label for="inputAddress">Statü</label><br />
-                            <input type="text" class="form-control" name="Status" placeholder="Statu....">
+                            <select class="custom-select" name="Status">
+                                <option value="0">Pasif</option>
+                                <option value="1">Aktif</option>
+                            </select>
+                            @*<input type="text" class="form-control" name="Status" placeholder="Statu....">*@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Kaydet</button>
@@ -201,7 +227,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Yeni Müşteri Rut Kayıt</h4>
+                <h4 class="modal-title" id="myModalLabel">Müşteri Bilgi Güncelle</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
             </div>
             <form method="post" action="~/Musteri/Musteri_Guncelle">
@@ -220,10 +246,18 @@
                     </div>
                     <div class="form-group">
                         <label for="inputAddress">Müşteri Tipi</label><br />
+                        @*<select class="custom-select">
+                            <option value="TP" id="G_CurrAccType" name="CurrAccType">Toptan</option>
+                            <option value="PR" id="G_CurrAccType" name="CurrAccType">Perakende</option>
+                        </select>*@
                         <input type="text" id="G_CurrAccType" class="form-control" name="CurrAccType" placeholder="Müşteri Tipi....">
                     </div>
                     <div class="form-group">
                         <label for="inputAddress">Statü</label><br />
+                        @*<select class="custom-select">
+                            <option value="0" id="G_IsActive" name="Status">Pasif</option>
+                            <option value="1" id="G_IsActive" name="Status">Aktif</option>
+                        </select>*@
                         <input type="text" id="G_IsActive" class="form-control" name="Status" placeholder="Statu....">
                     </div>
                     <button type="submit" class="btn btn-default bg-blue disabled" id="guncelle">Güncelle</button>
@@ -277,6 +311,12 @@
     $('#G_CurrAccDesc').on('input', function (e) {
         $('#guncelle').removeClass('btn btn-default bg-blue disabled').addClass('btn btn-default bg-blue');
     });
+    $('#G_CurrAccType').on('change', function (e) {
+        $('#guncelle').removeClass('btn btn-default bg-blue disabled').addClass('btn btn-default bg-blue');
+    });
+    $('#G_IsActive').on('change', function (e) {
+        $('#guncelle').removeClass('btn btn-default bg-blue disabled').addClass('btn btn-default bg-blue');
+    });
 
 
     function Guncelle(Id, CurrAccCode, CurrAccDesc, CurrAccType, IsActive) {
@@ -299,3 +339,11 @@
         $('#modal-default_goster').modal('show');
     }
 </script>
+
+<script type="text/javascript">
+    function Sil(Id) {
+        $('#S_id').val(Id);
+        $('#musteri_sil').modal('show');
+    }
+</script>
+
