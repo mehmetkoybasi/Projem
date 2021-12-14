@@ -2349,6 +2349,7 @@
     <Content Include="and\vendor\select2\select2.js" />
     <Content Include="and\vendor\select2\select2.min.css" />
     <Content Include="and\vendor\select2\select2.min.js" />
+    <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -2357,6 +2358,7 @@
     <Compile Include="Controllers\AnaSayfaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MusteriController.cs" />
+    <Compile Include="Controllers\RaporController.cs" />
     <Compile Include="Controllers\SiparisYonetimController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2781,6 +2783,9 @@
     <Content Include="Views\Musteri\Musteri_Kaydet.cshtml" />
     <Content Include="Views\Musteri\Musteri_Guncelle.cshtml" />
     <Content Include="Views\Musteri\Musteri_Sil.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Rapor\MusteriRapor.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
