@@ -256,7 +256,7 @@
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
 <script src="../../plugins/toastr/toastr.min.js"></script>
-<script src="../../dist/js/adminlte.min.js"></script>
+@*<script src="../../dist/js/adminlte.min.js"></script>*@
 
 @if (!string.IsNullOrEmpty(TempData["KayitMesaj"] as string))
 {
@@ -295,10 +295,10 @@
     $('#G_CurrAccDesc').on('input', function (e) {
         $('#guncelle').removeClass('btn btn-default bg-blue disabled').addClass('btn btn-default bg-blue');
     });
-    $('#G_CurrAccType').on('input', function (e) {
+    $('#G_CurrAccType').on('click', function (e) {
         $('#guncelle').removeClass('btn btn-default bg-blue disabled').addClass('btn btn-default bg-blue');
     });
-    $('#G_IsActive').on('input', function (e) {
+    $('#G_IsActive').on('click', function (e) {
         $('#guncelle').removeClass('btn btn-default bg-blue disabled').addClass('btn btn-default bg-blue');
     });
 
