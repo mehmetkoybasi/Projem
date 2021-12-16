@@ -12,6 +12,7 @@ namespace Punch.Models
         public string CurrAccDesc { get; set; }
         public string CurrAccType { get; set; }
         public int Status { get; set; } 
+        public string Mara { get; set; }
 
     }
 }

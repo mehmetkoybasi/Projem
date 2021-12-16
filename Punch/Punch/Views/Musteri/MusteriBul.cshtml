@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewBag.Title = "MusteriBul";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Projects</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Finans Yönetim</a></li>
+                    <li class="breadcrumb-item active">Müşteri</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Müşteri Listesi</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="Ekle" title="Yeni Müşteri Ekle" data-toggle="modal" data-target="#modal-default_kaydet">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            <table class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th style="width: 1%">
+                            ID
+                        </th>
+                        <th style="width: 20%">
+                            CurrAccCode
+                        </th>
+                        <th style="width: 30%">
+                            CurrAccDesc
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th style="width: 8%" class="text-center">
+                            Description
+                        </th>
+                        <th style="width: 20%">
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var rec_ in (IEnumerable<Punch.Models.Musteri>)ViewData["MusteriList"])
+                    {
+                        <tr>
+                            <td>@rec_.Id</td>
+                            <td>@rec_.CurrAccType - @rec_.CurrAccCode  </td>
+                            <td>@rec_.CurrAccDesc</td>
+                            <td>
+                                @if (@rec_.Status == 1)
+                                {
+                                    <span class="badge badge-success">Aktif</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">Pasif</span>
+                                }
+                            </td>
+
+                            <td class="project-state">
+                                <span class="badge badge-success">Success</span>
+                            </td>
+                            <td class="project-actions text-right">
+                                <form method="post" action="~/Musteri/Musteri_Sil">
+                                    <a class="btn btn-primary btn-sm" title="Göster" href="javascript:Goster('@rec_.Id','@rec_.CurrAccCode','@rec_.CurrAccDesc','@rec_.CurrAccType','@rec_.Status');">
+                                        <i class="fas fa-folder">
+                                        </i>
+                                        Göster
+                                    </a>
+                                    <a class="btn btn-info btn-sm" title="Güncelle" href="javascript:Guncelle('@rec_.Id','@rec_.CurrAccCode','@rec_.CurrAccDesc','@rec_.CurrAccType','@rec_.Status');">
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                        Güncelle
+                                    </a>
+                                    @*<form method="post" action="~/Musteri/Musteri_Sil">*@
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                        Sil
+                                    </button>
+                                    <input type="hidden" name="Id" value="@rec_.Id" />
+                                </form>
+                                @*<input type="button" id="musteri_sil" class="btn btn-danger btn-sm fas fa-trash" name="name" value="Sil" data-id="@rec_.Id"/>*@
+
+                                @*<a class="btn btn-danger btn-sm" title="Sil" method="post" href="~/Musteri/Musteri_Sil">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                        Sil
+                                        <input type="hidden" name="Id" value="@rec_.Id" />
+                                    </a>*@
+                            </td>
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="../../plugins/toastr/toastr.min.js"></script>
+<script src="../../dist/js/adminlte.min.js"></script>
+
+@if (!string.IsNullOrEmpty(TempData["KayitMesaj"] as string))
+{
+
+    <script type="text/javascript">
+        $(function () {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            if (TempData["KayitMesaj"] == 'Updated') {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Müşteri Güncellemeniz Başarıyla Yapılmıştır'
+                })
+            }
+            else if (TempData["KayitMesaj"] == 'Added') {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Müşteri Kaydınız Başarıyla Yapılmıştır'
+                })
+            }
+        });
+    </script>
+
+}
+<script type="text/javascript">
+    $('#G_CurrAccDesc').on('input', function (e) {
+        $('#guncelle').removeClass('btn btn-default bg-blue disabled').addClass('btn btn-default bg-blue');
+    });
+    $('#G_CurrAccType').on('input', function (e) {
+        $('#guncelle').removeClass('btn btn-default bg-blue disabled').addClass('btn btn-default bg-blue');
+    });
+    $('#G_IsActive').on('input', function (e) {
+        $('#guncelle').removeClass('btn btn-default bg-blue disabled').addClass('btn btn-default bg-blue');
+    });
+
+
+    function Guncelle(Id, CurrAccCode, CurrAccDesc, CurrAccType, IsActive) {
+        $('#G_id').val(Id);
+        $('#G_CurrAccCode').val(CurrAccCode);
+        $('#G_CurrAccDesc').val(CurrAccDesc);
+        $('#G_CurrAccType').val(CurrAccType);
+        $('#G_IsActive').val(IsActive);
+        $('#modal-default_guncelle').modal('show');
+    }
+</script>
+
+<script type="text/javascript">
+    function Goster(Id, CurrAccCode, CurrAccDesc, CurrAccType, IsActive) {
+        $('#id').val(Id);
+        $('#CurrAccCode').val(CurrAccCode);
+        $('#CurrAccDesc').val(CurrAccDesc);
+        $('#CurrAccType').val(CurrAccType);
+        $('#IsActive').val(IsActive);
+        $('#modal-default_goster').modal('show');
+    }
+</script>

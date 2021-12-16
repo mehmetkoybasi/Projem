@@ -119,5 +119,49 @@ namespace Punch.Controllers
                 }
             }
         }
+
+        public ActionResult MusteriBul(string ara)
+        {
+
+            List<Musteri> MusteriList = new List<Musteri>();
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                string query = "SELECT * FROM cd_curracc where curraccdesc LIKE ('%"+ara+"%')";
+                //string query = "call sp_customer";
+                //string query = "SET @p0='2'; CALL sp_customer (@p0); SELECT @p0 AS `AccID`;"; 
+                using (MySqlCommand cmd = new MySqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (MySqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        try
+                        {
+                            while (sdr.Read())
+                            {
+                                MusteriList.Add(new Musteri
+                                {
+                                    Id = Convert.ToInt32(sdr["ID"]),
+                                    CurrAccCode = Convert.ToInt32(sdr["CurrAccCode"]),
+                                    CurrAccDesc = sdr["CurrAccDesc"].ToString(),
+                                    CurrAccType = sdr["CurrAccType"].ToString(),
+                                    Status = Convert.ToInt32(sdr["IsActive"]),
+
+                                });
+                            }
+                            con.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                            con.Close();
+                            throw;
+                        }
+                    }
+                }
+            }
+            ViewData["MusteriList"] = MusteriList;
+            return View(MusteriList);
+        }
     }
 }
