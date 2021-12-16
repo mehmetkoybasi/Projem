@@ -128,8 +128,6 @@ namespace Punch.Controllers
             using (MySqlConnection con = new MySqlConnection(constr))
             {
                 string query = "SELECT * FROM cd_curracc where curraccdesc LIKE ('%"+ara+"%')";
-                //string query = "call sp_customer";
-                //string query = "SET @p0='2'; CALL sp_customer (@p0); SELECT @p0 AS `AccID`;"; 
                 using (MySqlCommand cmd = new MySqlCommand(query))
                 {
                     cmd.Connection = con;
