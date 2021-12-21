@@ -2362,6 +2362,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AnaSayfaController.cs" />
+    <Compile Include="Controllers\AyarlarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MusteriController.cs" />
     <Compile Include="Controllers\SiparisYonetimController.cs" />
@@ -2370,6 +2371,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Ayarlar.cs" />
     <Compile Include="Models\Genel.cs" />
     <Compile Include="Models\Kullanici.cs" />
     <Compile Include="Models\Musteri.cs" />
@@ -2796,6 +2798,7 @@
     <Content Include="Views\Stok\Index.cshtml" />
     <Content Include="Views\Stok\StokIndex.cshtml" />
     <Content Include="Views\Stok\DepoIndex.cshtml" />
+    <Content Include="Views\Ayarlar\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
